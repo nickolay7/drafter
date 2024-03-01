@@ -3,8 +3,7 @@ import Link from 'next/link';
 import DeleteForm from "@/components/deleteForm";
 import {useState} from "react";
 import {Task} from "@prisma/client";
-import TasksFilter from "@/components/tasksFilter";
-import SortByDate from "@/components/sortByDate";
+import ButtonsBlock from "@/components/buttonsBlock";
 
 export enum TaskFilter {
     all = 'all',
@@ -45,8 +44,20 @@ const TaskList = ({ tasks = [] }: { tasks: Task[] }) => {
     return (
         <>
             <div className='flex justify-between'>
-                <TasksFilter filterHandler={setFilterBy} activeFilter={filterBy}/>
-                <SortByDate sortHandler={setSortBy} activeSort={sortBy}/>
+                <ButtonsBlock
+                    filterHandler={setFilterBy}
+                    activeButton={filterBy}
+                    config={
+                        [TaskFilter.all, TaskFilter.active, TaskFilter.completed]
+                    }
+                />
+                <ButtonsBlock
+                    filterHandler={setSortBy}
+                    activeButton={sortBy}
+                    config={
+                        [SortBy.asc, SortBy.desc]
+                    }
+                />
             </div>
             <ul className='mt-8'>
                 {filteredTasks.map((task) => (
